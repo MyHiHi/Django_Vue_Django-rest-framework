@@ -27,12 +27,29 @@ from django.conf.urls.static import static
 from django.conf.urls import include
 from rest_framework.documentation import include_docs_urls
 # from goods.views_base import GoodsListView
-from goods.views import GoodsListView
+from goods.views import GoodsListView1,GoodsListView2,GoodsListView3
+
+# 方法一
+# goods_list=GoodsListView3.as_view({
+#     'get':'list'
+# })
+
+# 方法二
+from rest_framework.routers import DefaultRouter
+router=DefaultRouter()
+router.register('goods3',GoodsListView3,base_name='good3')
+
+
 urlpatterns = [
-    path('xadmin/', xadmin.site.urls), 
-    path('goods/', GoodsListView.as_view(),name='goods_list'),
+    
+    path('goods1/', GoodsListView1.as_view(),name='goods_list1'),
+    path('goods2/', GoodsListView2.as_view(),name='goods_list2'),
+    # path('goods3/', goods_list,name='goods_list3'),
+    # path('goods3/', include(router.urls),name='goods_list3'),
+    path('', include(router.urls),name='goods_list3'),
     path('docs/',include_docs_urls(title='慕学生鲜')) ,
-    path('api-auth/', include('rest_framework.urls'))
+    path('api-auth/', include('rest_framework.urls')),
+    path('', xadmin.site.urls), 
 
 ]
 if settings.DEBUG:

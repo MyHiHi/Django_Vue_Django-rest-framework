@@ -28,7 +28,7 @@ DEBUG =True
 
 ALLOWED_HOSTS = []
 AUTH_USER_MODEL = "users.UserProfile"
-
+CORS_ORIGIN_ALLOW_ALL=True
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'xadmin',
     'crispy_forms',
     'rest_framework',
+    'django_filters',
     'reversion',
     'DjangoUeditor',
     'goods.apps.GoodsConfig',
@@ -54,6 +55,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -139,3 +141,9 @@ STATICFILES_DIRS = [
 ]
 MEDIA_URL='/media/'
 MEDIA_ROOT=os.path.join(BASE_DIR,'media').replace('\\', '/')  
+
+REST_FRAMEWORK={
+    'DEFAULT_AUTHENTICATION_CLASSES': [],
+    # 'DEFAULT_PAGINATION_CLASS': "rest_framework.pagination.PageNumberPagination",
+    # 'PAGE_SIZE':10
+}
