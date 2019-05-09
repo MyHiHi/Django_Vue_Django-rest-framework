@@ -11,10 +11,23 @@ class GoodsSerializer(serializers.Serializer):
         Create and return a new `Snippet` instance, given the validated data.
         """
         return Goods.objects.create(**validated_data)
-class CategoryModelSerializer(serializers.ModelSerializer):
+class CategoryModelSerializer2(serializers.ModelSerializer):
+    """
+    商品第二类类别序列化
+    """
     class Meta:
         model=GoodsCategory
         fields='__all__'
+
+class CategoryModelSerializer(serializers.ModelSerializer):
+    """
+    商品类别序列化
+    """
+    sub_cat=CategoryModelSerializer2(many=True)
+    class Meta:
+        model=GoodsCategory
+        fields='__all__'
+
 
 class GoodsModelSerializer(serializers.ModelSerializer):
     category=CategoryModelSerializer()
@@ -23,3 +36,4 @@ class GoodsModelSerializer(serializers.ModelSerializer):
         # 引入Goods所有字段
         fields='__all__'
         # fields=('name','click_num','shop_price','goods_brief','goods_front_image','add_time')
+
